@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# Accessible CV ATS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An accessible, AI-powered resume scanner and CV builder. Paste your resume and a job description to get an instant ATS match score powered by Gemini, or build a polished PDF resume from scratch.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### ATS Scanner
+- Upload or paste your resume text and a job description
+- Get an AI-generated match score (0–10) with a `Low / Medium / High` status
+- Receive a detailed breakdown:
+  - Executive summary
+  - Missing keywords
+  - Suggested improvements
+  - Formatting issues
+- Powered by **Google Gemini 2.5 Pro** via a Netlify serverless function
+- Rate-limited to 10 requests per minute per IP (using Netlify Blobs)
 
-## React Compiler
+### CV Builder
+- Build a resume section by section: Personal Info, Professional Summary, Experience, Education, Skills, Languages
+- Live preview panel updates as you type
+- Export your resume as a PDF with one click
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Accessibility
+- Semantic heading hierarchy managed automatically via [automatic-heading-level](https://github.com/micaavigliano/automatic-heading-level)
+- Proper ARIA roles and labels throughout (`tabpanel`, `aria-labelledby`, etc.)
+- Focus management and focus roving
+- Language switcher supporting **English**, **Spanish**, and **Italian**
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Layer | Technology |
+|---|---|
+| Framework | React 19 + TypeScript |
+| Styling | Tailwind CSS v4 |
+| Build tool | Vite |
+| AI | Google Gemini 2.5 Pro (`@google/genai`) |
+| PDF | `@react-pdf/renderer` |
+| PDF parsing | `pdfjs-dist` |
+| Charts | Recharts |
+| Animations | Motion (Framer Motion) |
+| Backend | Netlify Functions + Netlify Blobs |
+| Accessibility | `automatic-heading-level` |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Future improvements
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+For the sake of times, I deployed with the app with the following tech debt
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Improve SEO
+- Improve Accessibility
+- Fix minor bugs on the charts
+- Pulish prompt
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+any suggestion is welcomed
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Author
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Made by [Micaela Avigliano](https://linkedin.com/in/micaelaavigliano) · [GitHub](https://github.com/micaavigliano)
+
