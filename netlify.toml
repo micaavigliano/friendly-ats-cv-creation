@@ -4,7 +4,3 @@
 
 [dev]
   command = "npm run dev"
-
-[[edge_functions]]
-  path = "/.netlify/functions/analyze"
-  function = "rate-limit"
