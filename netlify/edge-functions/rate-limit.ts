@@ -1,5 +1,5 @@
 import type { Config, Context } from '@netlify/edge-functions'
-import { getStore } from '@netlify/blobs'
+import { getStore } from 'npm:@netlify/blobs'
 
 const WINDOW_MS = 60_000 // 1 minute
 const MAX_REQUESTS = 10
