@@ -30,13 +30,17 @@ export const handler = async (event: any) => {
   if (event.httpMethod !== "POST") return { statusCode: 405, body: "Method Not Allowed" }
 
   const ip = event.headers["x-forwarded-for"] ?? event.headers["client-ip"] ?? "unknown"
-  const allowed = await checkRateLimit(ip)
-  if (!allowed) {
-    return {
-      statusCode: 429,
-      headers: { "Content-Type": "application/json", "Retry-After": "60" },
-      body: JSON.stringify({ error: "Too many requests. Please wait before trying again." }),
+  try {
+    const allowed = await checkRateLimit(ip)
+    if (!allowed) {
+      return {
+        statusCode: 429,
+        headers: { "Content-Type": "application/json", "Retry-After": "60" },
+        body: JSON.stringify({ error: "Too many requests. Please wait before trying again." }),
+      }
     }
+  } catch {
+    // Blobs not available in local dev — skip rate limiting
   }
 
   const client = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
