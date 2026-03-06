@@ -17,7 +17,6 @@ export async function analyzeResume(resumeText: string, jobDescription: string):
 
     const result = await response.json();
 
-    // NEW SDK PATH: result.candidates[0].content.parts[0].text
     const rawText = result.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (!rawText) {

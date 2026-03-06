@@ -70,16 +70,28 @@ export const handler = async (event: any) => {
   try {
 
     const result = await client.models.generateContent({
-      model: "gemini-2.5-pro", 
-      contents: `Analyze this resume against this JD: \nResume: ${resumeText} \nJD: ${jobDescription}`,
+      model: "gemini-2.5-pro",
+      contents: `You are an ATS (Applicant Tracking System) expert. Analyze the resume against the job description below.
+
+Scoring rules (score must be a number from 0 to 10):
+- 0–4: Low match → set matchStatus to "Low"
+- 5–7: Medium match → set matchStatus to "Medium"
+- 8–10: High match → set matchStatus to "High"
+
+The matchStatus MUST directly reflect the score using the rules above. Do not use any other values.
+
+Resume:
+${resumeText}
+
+Job Description:
+${jobDescription}`,
       config: {
         responseMimeType: "application/json",
-        // In the new SDK, you can often pass the schema as a plain object
         responseSchema: {
           type: "OBJECT",
           properties: {
             score: { type: "NUMBER" },
-            matchStatus: { type: "STRING" },
+            matchStatus: { type: "STRING", enum: ["Low", "Medium", "High"] },
             summary: { type: "STRING" },
             missingKeywords: { type: "ARRAY", items: { type: "STRING" } },
             formattingIssues: { type: "ARRAY", items: { type: "STRING" } },
